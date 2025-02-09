@@ -5,7 +5,8 @@ import {
   ControlButtons,
   Button,
   ContentArea,
-  TitleBarInfo
+  TitleBarInfo,
+  ResizeHandle
 } from './styled'
 
 interface GenericWindowProps {
@@ -15,6 +16,8 @@ interface GenericWindowProps {
   prevPosition?: { x: number; y: number }
   onClick?: () => void
   style?: React.CSSProperties
+  onMinimize?: () => void
+  onClose?: () => void
 }
 
 const GenericWindow: React.FC<GenericWindowProps> = ({
@@ -23,7 +26,9 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
   icon,
   prevPosition,
   onClick,
-  style
+  style,
+  onMinimize,
+  onClose
 }) => {
   const [size, setSize] = useState({ width: 400, height: 300 })
   const [position, setPosition] = useState(prevPosition || { x: 100, y: 100 })
@@ -93,25 +98,15 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
           <span>{title}</span>
         </TitleBarInfo>
         <ControlButtons>
-          <Button onClick={() => setSize({ ...size, height: 0 })}>-</Button>
+          <Button onClick={onMinimize}>-</Button>
           <Button onClick={() => setSize({ width: 800, height: 600 })}>
             []
           </Button>
-          <Button onClick={() => console.log('Closed')}>X</Button>
+          <Button onClick={onClose}>X</Button>
         </ControlButtons>
       </TitleBar>
       <ContentArea>{children}</ContentArea>
-      <div
-        onMouseDown={handleResizeMouseDown}
-        style={{
-          cursor: 'nwse-resize',
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          width: '10px',
-          height: '10px'
-        }}
-      />
+      <ResizeHandle onMouseDown={handleResizeMouseDown} />
     </WindowContainer>
   )
 }

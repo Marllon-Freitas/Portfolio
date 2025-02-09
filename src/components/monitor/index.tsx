@@ -100,6 +100,9 @@ export const Monitor = () => {
   const [isDragging, setIsDragging] = useState(false)
   const [openWindows, setOpenWindows] = useState<Window[]>([])
   const [windowOrder, setWindowOrder] = useState<number[]>([])
+  const [minimizedWindows, setMinimizedWindows] = useState<Set<number>>(
+    new Set()
+  )
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(SHORTCUTS)
 
   const startPos = useRef({ x: 0, y: 0 })
@@ -245,6 +248,29 @@ export const Monitor = () => {
       const newOrder = prevOrder.filter((windowId) => windowId !== id)
       return [...newOrder, id]
     })
+    setMinimizedWindows((prevMinimized) => {
+      const newMinimized = new Set(prevMinimized)
+      newMinimized.delete(id)
+      return newMinimized
+    })
+  }
+
+  const handleMinimizeClick = (id: number) => {
+    setMinimizedWindows((prevMinimized) => new Set(prevMinimized).add(id))
+  }
+
+  const handleCloseClick = (id: number) => {
+    setOpenWindows((prevWindows) =>
+      prevWindows.filter((window) => window.id !== id)
+    )
+    setWindowOrder((prevOrder) =>
+      prevOrder.filter((windowId) => windowId !== id)
+    )
+    setMinimizedWindows((prevMinimized) => {
+      const newMinimized = new Set(prevMinimized)
+      newMinimized.delete(id)
+      return newMinimized
+    })
   }
 
   return (
@@ -288,8 +314,11 @@ export const Monitor = () => {
             prevPosition={window.position}
             onClick={() => handleWindowClick(window.id)}
             style={{
-              zIndex: windowOrder.indexOf(window.id) + 1
+              zIndex: windowOrder.indexOf(window.id) + 1,
+              display: minimizedWindows.has(window.id) ? 'none' : 'block'
             }}
+            onMinimize={() => handleMinimizeClick(window.id)}
+            onClose={() => handleCloseClick(window.id)}
           >
             {window.content}
           </GenericWindow>

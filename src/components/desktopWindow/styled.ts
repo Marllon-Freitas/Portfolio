@@ -8,6 +8,8 @@ export const WindowContainer = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   user-select: none;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 1;
 `
 
 export const TitleBar = styled.div`
@@ -110,3 +112,22 @@ export const ContentArea = styled.div`
     background-image: svg-load('/src/assets/icons/button_right.svg');
   }
 `
+
+export const ResizeHandle = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  &::after {
+    content: '';
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #666;
+    border-bottom: 2px solid #666;
+  }
+`;
