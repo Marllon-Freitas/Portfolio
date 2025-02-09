@@ -81,6 +81,7 @@ export const Monitor = () => {
   const [isSelecting, setIsSelecting] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const [openWindows, setOpenWindows] = useState<Window[]>([])
+  const [windowOrder, setWindowOrder] = useState<number[]>([])
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(SHORTCUTS)
 
   const startPos = useRef({ x: 0, y: 0 })
@@ -96,13 +97,10 @@ export const Monitor = () => {
     const timeSinceLastClick = currentTime - lastClickTime.current
     lastClickTime.current = currentTime
 
-    if (timeSinceLastClick < 300) {
-      return
-    }
+    if (timeSinceLastClick < 300) return
 
-    if (!selectedShortcuts.has(id) && !isDragging) {
+    if (!selectedShortcuts.has(id) && !isDragging)
       setSelectedShortcuts(new Set([id]))
-    }
   }
 
   const handleShortcutStartDrag = () => {
@@ -203,12 +201,28 @@ export const Monitor = () => {
   }
 
   const handleDoubleClick = (shortcut: Shortcut) => {
-    const newPosition = {
-      x: lastWindowPosition.x + 20,
-      y: lastWindowPosition.y + 20
+    const existingWindow = openWindows.find(
+      (window) => window.id === shortcut.id
+    )
+    if (existingWindow) {
+      handleWindowClick(existingWindow.id)
+    } else {
+      const newPosition = {
+        x: lastWindowPosition.x + 20,
+        y: lastWindowPosition.y + 20
+      }
+      const newWindow = { ...shortcut, position: newPosition }
+      setOpenWindows([...openWindows, newWindow])
+      setWindowOrder([...windowOrder, newWindow.id])
+      setLastWindowPosition(newPosition)
     }
-    setOpenWindows([...openWindows, { ...shortcut, position: newPosition }])
-    setLastWindowPosition(newPosition)
+  }
+
+  const handleWindowClick = (id: number) => {
+    setWindowOrder((prevOrder) => {
+      const newOrder = prevOrder.filter((windowId) => windowId !== id)
+      return [...newOrder, id]
+    })
   }
 
   return (
@@ -249,6 +263,10 @@ export const Monitor = () => {
             key={window.id}
             title={window.label}
             prevPosition={window.position}
+            onClick={() => handleWindowClick(window.id)}
+            style={{
+              zIndex: windowOrder.indexOf(window.id) + 1
+            }}
           >
             {window.content}
           </GenericWindow>

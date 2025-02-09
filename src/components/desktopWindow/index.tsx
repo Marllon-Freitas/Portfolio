@@ -11,14 +11,22 @@ interface GenericWindowProps {
   title: string
   children: React.ReactNode
   prevPosition?: { x: number; y: number }
+  onClick?: () => void
+  style?: React.CSSProperties
 }
 
-const GenericWindow: React.FC<GenericWindowProps> = ({ title, children, prevPosition}) => {
+const GenericWindow: React.FC<GenericWindowProps> = ({
+  title,
+  children,
+  prevPosition,
+  onClick,
+  style
+}) => {
   const [size, setSize] = useState({ width: 400, height: 300 })
   const [position, setPosition] = useState(prevPosition || { x: 100, y: 100 })
   const [isDragging, setIsDragging] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
-  
+
   const startPos = useRef({ x: 0, y: 0 })
   const startSize = useRef({ width: 400, height: 300 })
 
@@ -71,8 +79,10 @@ const GenericWindow: React.FC<GenericWindowProps> = ({ title, children, prevPosi
         left: position.x,
         top: position.y,
         width: size.width,
-        height: size.height
+        height: size.height,
+        ...style
       }}
+      onMouseDown={onClick}
     >
       <TitleBar onMouseDown={handleMouseDown}>
         <span>{title}</span>
