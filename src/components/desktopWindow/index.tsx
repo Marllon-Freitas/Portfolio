@@ -4,12 +4,14 @@ import {
   TitleBar,
   ControlButtons,
   Button,
-  ContentArea
+  ContentArea,
+  TitleBarInfo
 } from './styled'
 
 interface GenericWindowProps {
   title: string
   children: React.ReactNode
+  icon?: string
   prevPosition?: { x: number; y: number }
   onClick?: () => void
   style?: React.CSSProperties
@@ -18,6 +20,7 @@ interface GenericWindowProps {
 const GenericWindow: React.FC<GenericWindowProps> = ({
   title,
   children,
+  icon,
   prevPosition,
   onClick,
   style
@@ -85,7 +88,10 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
       onMouseDown={onClick}
     >
       <TitleBar onMouseDown={handleMouseDown}>
-        <span>{title}</span>
+        <TitleBarInfo>
+          <img src={icon} alt="icon" />
+          <span>{title}</span>
+        </TitleBarInfo>
         <ControlButtons>
           <Button onClick={() => setSize({ ...size, height: 0 })}>-</Button>
           <Button onClick={() => setSize({ width: 800, height: 600 })}>

@@ -23,6 +23,17 @@ export const TitleBar = styled.div`
   cursor: move;
 `
 
+export const TitleBarInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+`
+
 export const ControlButtons = styled.div`
   display: flex;
   gap: 5px;

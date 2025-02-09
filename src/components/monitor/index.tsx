@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import folderIcon from '../../assets/icons/folder.ico'
+import cmdIcon from '../../assets/icons/cmd.png'
 import {
   Content,
   MonitorScreen,
@@ -9,6 +10,7 @@ import {
 } from './styled'
 import DesktopShortcut from '../desktopShortCut'
 import GenericWindow from '../desktopWindow'
+import Taskbar from '../taskBar'
 
 interface Shortcut {
   id: number
@@ -23,6 +25,7 @@ interface Window {
   label: string
   content: React.ReactNode
   position: { x: number; y: number }
+  icon: string
 }
 
 const SHORTCUTS: Shortcut[] = [
@@ -52,6 +55,21 @@ const SHORTCUTS: Shortcut[] = [
     position: { x: 20, y: 100 },
     icon: folderIcon,
     label: 'docs.txt',
+    content: (
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam
+        tenetur cum molestiae quam voluptatem est saepe, nobis dolores, facilis
+        laborum ratione id veritatis exercitationem praesentium! Odio magnam
+        laudantium voluptas?
+        <br />
+      </div>
+    )
+  },
+  {
+    id: 3,
+    position: { x: 20, y: 180 },
+    icon: cmdIcon,
+    label: 'cmd',
     content: (
       <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam
@@ -211,7 +229,11 @@ export const Monitor = () => {
         x: lastWindowPosition.x + 20,
         y: lastWindowPosition.y + 20
       }
-      const newWindow = { ...shortcut, position: newPosition }
+      const newWindow = {
+        ...shortcut,
+        position: newPosition,
+        icon: shortcut.icon
+      }
       setOpenWindows([...openWindows, newWindow])
       setWindowOrder([...windowOrder, newWindow.id])
       setLastWindowPosition(newPosition)
@@ -262,6 +284,7 @@ export const Monitor = () => {
           <GenericWindow
             key={window.id}
             title={window.label}
+            icon={window.icon}
             prevPosition={window.position}
             onClick={() => handleWindowClick(window.id)}
             style={{
@@ -271,6 +294,17 @@ export const Monitor = () => {
             {window.content}
           </GenericWindow>
         ))}
+        <Taskbar
+          openWindows={openWindows.map((window) => ({
+            id: window.id,
+            title: window.label,
+            icon: window.icon
+          }))}
+          onWindowsButtonClick={() => {
+            console.log('clicked')
+          }}
+          onTaskClick={handleWindowClick}
+        />
       </Content>
       <Overlay />
       <Scanline />
