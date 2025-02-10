@@ -8,6 +8,7 @@ import {
   TitleBarInfo,
   ResizeHandle
 } from './styled'
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../utils'
 
 interface GenericWindowProps {
   title: string
@@ -34,13 +35,21 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
   const [position, setPosition] = useState(prevPosition || { x: 100, y: 100 })
   const [isDragging, setIsDragging] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
+  const [isMaximized, setIsMaximized] = useState(false)
 
   const startPos = useRef({ x: 0, y: 0 })
   const startSize = useRef({ width: 400, height: 300 })
+  const prevPos = useRef({ x: 0, y: 0 })
+  const prevSize = useRef({ width: 400, height: 300 })
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true)
-    startPos.current = { x: e.clientX - position.x, y: e.clientY - position.y }
+    if (!isMaximized) {
+      setIsDragging(true)
+      startPos.current = {
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      }
+    }
   }
 
   const handleMouseMove = useCallback(
@@ -67,9 +76,24 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
   }
 
   const handleResizeMouseDown = (e: React.MouseEvent) => {
-    setIsResizing(true)
-    startPos.current = { x: e.clientX, y: e.clientY }
-    startSize.current = { width: size.width, height: size.height }
+    if (!isMaximized) {
+      setIsResizing(true)
+      startPos.current = { x: e.clientX, y: e.clientY }
+      startSize.current = { width: size.width, height: size.height }
+    }
+  }
+
+  const handleMaximize = () => {
+    if (isMaximized) {
+      setSize(prevSize.current)
+      setPosition(prevPos.current)
+    } else {
+      prevSize.current = size
+      prevPos.current = position
+      setSize({ width: WINDOW_WIDTH, height: WINDOW_HEIGHT })
+      setPosition({ x: 0, y: 0 })
+    }
+    setIsMaximized(!isMaximized)
   }
 
   useEffect(() => {
@@ -99,9 +123,7 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
         </TitleBarInfo>
         <ControlButtons>
           <Button onClick={onMinimize}>-</Button>
-          <Button onClick={() => setSize({ width: 800, height: 600 })}>
-            []
-          </Button>
+          <Button onClick={handleMaximize}>{isMaximized ? '🗗' : '🗖'}</Button>
           <Button onClick={onClose}>X</Button>
         </ControlButtons>
       </TitleBar>

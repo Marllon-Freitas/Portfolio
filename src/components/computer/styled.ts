@@ -8,8 +8,8 @@ export const ComputerContainer = styled.div`
 `;
 
 export const ComputerCase = styled.div`
-  width: 900px;
-  height: 700px;
+  width: calc(var(--screen-width) + 5rem);
+  height: calc(var(--screen-height) + 5rem);
   background-color: var(--gray);
   border-radius: 10px;
   display: flex;

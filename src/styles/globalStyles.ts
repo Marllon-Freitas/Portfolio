@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { WINDOW_WIDTH ,WINDOW_HEIGHT } from '../utils'
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -12,6 +13,9 @@ export const GlobalStyle = createGlobalStyle`
     --selection-background: rgba(153, 193, 241, 0.3);
     --screen-background-color: #001f3f;
     --font: 'Pixelated MS Sans Serif', sans-serif;
+
+    --screen-width: ${WINDOW_WIDTH}px;
+    --screen-height: ${WINDOW_HEIGHT}px;
   }
 
   * {

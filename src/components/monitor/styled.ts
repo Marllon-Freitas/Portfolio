@@ -46,8 +46,8 @@ export const scanlineAnimation = keyframes`
 export const MonitorScreen = styled.div`
   background: var(--black);
   border: 2px solid var(--white);
-  width: 800px;
-  height: 600px;
+  width: var(--screen-width);
+  height: var(--screen-height);
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;

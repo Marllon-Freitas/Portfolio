@@ -5,7 +5,7 @@ export const TaskbarContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40px;
+  height: 2.5rem;
   background-color: var(--gray);
   display: flex;
   align-items: center;
