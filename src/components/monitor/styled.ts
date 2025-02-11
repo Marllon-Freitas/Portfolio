@@ -54,7 +54,10 @@ export const Content = styled.div`
   position: relative;
   padding: 20px;
   color: var(--white);
-  background-color: var(--screen-background-color);
+  background-image: url('src/assets/img/outerWilds02.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
   filter: contrast(1.5) brightness(0.9);
 `

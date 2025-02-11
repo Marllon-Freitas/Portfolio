@@ -3,13 +3,13 @@ import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../utils'
 
 export const textShadowAnimation = keyframes`
   0% {
-    text-shadow: 0.44px 0 1px rgba(0,30,255,0.5),
-                 -0.44px 0 1px rgba(255,0,80,0.3),
+    text-shadow: 0.2px 0 0.3px rgba(0,30,255,0.5),
+                 -0.2px 0 0.3px rgba(255,0,80,0.3),
                  0 0 3px;
   }
   100% {
-    text-shadow: 2.62px 0 1px rgba(0,30,255,0.5),
-                 -2.62px 0 1px rgba(255,0,80,0.3),
+    text-shadow: 0.7px 0 1px rgba(0,30,255,0.5),
+                 -0.7px 0 1px rgba(255,0,80,0.3),
                  0 0 3px;
   }
 `

@@ -11,6 +11,8 @@ import {
 import DesktopShortcut from '../desktopShortCut'
 import GenericWindow from '../desktopWindow'
 import Taskbar from '../taskBar'
+import WallpaperOptions from '../desktopShortCut/components/wallpaperOptions'
+import { useWallpaper } from '../../hooks/useWallpaper'
 
 interface Shortcut {
   id: number
@@ -79,10 +81,18 @@ const SHORTCUTS: Shortcut[] = [
         <br />
       </div>
     )
+  },
+  {
+    id: 4,
+    position: { x: 20, y: 260 },
+    icon: folderIcon,
+    label: 'wallpapers',
+    content: null
   }
 ]
 
 export const Monitor = () => {
+  const { wallpapers, currentWallpaper, setWallpaperById } = useWallpaper()
   const [selectedShortcuts, setSelectedShortcuts] = useState<Set<number>>(
     new Set()
   )
@@ -103,7 +113,23 @@ export const Monitor = () => {
   const [minimizedWindows, setMinimizedWindows] = useState<Set<number>>(
     new Set()
   )
-  const [shortcuts, setShortcuts] = useState<Shortcut[]>(SHORTCUTS)
+
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>(() =>
+    SHORTCUTS.map((shortcut) =>
+      shortcut.label === 'wallpapers'
+        ? {
+            ...shortcut,
+            content: (
+              <WallpaperOptions
+                wallpapers={wallpapers}
+                currentWallpaperId={currentWallpaper.id}
+                onSelectWallpaper={setWallpaperById}
+              />
+            )
+          }
+        : shortcut
+    )
+  )
 
   const startPos = useRef({ x: 0, y: 0 })
   const contentRef = useRef<HTMLDivElement>(null)
@@ -280,6 +306,7 @@ export const Monitor = () => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        style={{ backgroundImage: `url(${currentWallpaper.src})` }}
       >
         {shortcuts.map((shortcut) => (
           <DesktopShortcut
@@ -320,7 +347,15 @@ export const Monitor = () => {
             onMinimize={() => handleMinimizeClick(window.id)}
             onClose={() => handleCloseClick(window.id)}
           >
-            {window.content}
+            {window.label === 'wallpapers' ? (
+              <WallpaperOptions
+                wallpapers={wallpapers}
+                currentWallpaperId={currentWallpaper.id}
+                onSelectWallpaper={setWallpaperById}
+              />
+            ) : (
+              window.content
+            )}
           </GenericWindow>
         ))}
         <Taskbar
