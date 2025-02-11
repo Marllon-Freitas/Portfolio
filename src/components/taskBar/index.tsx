@@ -32,6 +32,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
     <TaskbarContainer>
       <WindowsButton onClick={onWindowsButtonClick}>
         <img src={windowsIcon} alt="Windows" />
+        <p>Start</p>
       </WindowsButton>
       <OpenApps>
         {openWindows.map((window) => (

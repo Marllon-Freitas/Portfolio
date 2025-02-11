@@ -8,7 +8,9 @@ export const WindowContainer = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   user-select: none;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
   opacity: 1;
 `
 
@@ -42,12 +44,16 @@ export const ControlButtons = styled.div`
 `
 
 export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--gray);
   border: none;
   color: var(--black);
   cursor: pointer;
-  font-size: 16px;
-  min-width: 10px;
+  font-size: 1.2rem;
+  width: 1.5rem;
+  box-shadow: var(--windows-button-box-shadow);
 
   &:hover {
     opacity: 0.8;
@@ -73,11 +79,7 @@ export const ContentArea = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: #fff;
-    box-shadow:
-      inset -1px -1px #0a0a0a,
-      inset 1px 1px #fff,
-      inset -2px -2px grey,
-      inset 2px 2px #dfdfdf;
+    box-shadow: var(--windows-button-box-shadow);
   }
 
   &::-webkit-scrollbar-track {
@@ -130,4 +132,4 @@ export const ResizeHandle = styled.div`
     border-right: 2px solid #666;
     border-bottom: 2px solid #666;
   }
-`;
+`

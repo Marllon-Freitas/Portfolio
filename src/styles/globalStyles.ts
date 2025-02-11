@@ -1,5 +1,18 @@
-import { createGlobalStyle } from 'styled-components'
-import { WINDOW_WIDTH ,WINDOW_HEIGHT } from '../utils'
+import { createGlobalStyle, keyframes } from 'styled-components'
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../utils'
+
+export const textShadowAnimation = keyframes`
+  0% {
+    text-shadow: 0.44px 0 1px rgba(0,30,255,0.5),
+                 -0.44px 0 1px rgba(255,0,80,0.3),
+                 0 0 3px;
+  }
+  100% {
+    text-shadow: 2.62px 0 1px rgba(0,30,255,0.5),
+                 -2.62px 0 1px rgba(255,0,80,0.3),
+                 0 0 3px;
+  }
+`
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -13,6 +26,11 @@ export const GlobalStyle = createGlobalStyle`
     --selection-background: rgba(153, 193, 241, 0.3);
     --screen-background-color: #001f3f;
     --font: 'Pixelated MS Sans Serif', sans-serif;
+    --windows-button-box-shadow: 
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #fff,
+      inset -2px -2px grey,
+      inset 2px 2px #dfdfdf;
 
     --screen-width: ${WINDOW_WIDTH}px;
     --screen-height: ${WINDOW_HEIGHT}px;
@@ -32,7 +50,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-family: var(--font);
     @media (max-width: 1080px) {
       font-size: 93.75%;
     }
@@ -43,8 +60,14 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
-    margin: 0;
-    padding: 0;
+    font-family: var(--font);
     background-color: var(--background);
+  }
+
+  p, h1, h2, h3, h4, h5, h6, span, a, li, div {
+    animation: ${textShadowAnimation} 1s infinite alternate;
+    -webkit-animation: ${textShadowAnimation} 1s infinite alternate;
+    -moz-animation: ${textShadowAnimation} 1s infinite alternate;
+    -o-animation: ${textShadowAnimation} 1s infinite alternate;
   }
 `

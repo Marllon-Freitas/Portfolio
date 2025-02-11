@@ -34,7 +34,7 @@ export const Icon = styled.img`
   margin: 0 auto;
 `
 
-export const Label = styled.div`
+export const Label = styled.span`
   text-align: center;
   font-size: 0.6rem;
   margin-top: 5px;

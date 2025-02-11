@@ -21,13 +21,11 @@ export const WindowsButton = styled.button`
   height: 80%;
   gap: 1rem;
   justify-content: space-between;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
-  box-shadow:
-    inset -1px -1px #0a0a0a,
-    inset 1px 1px #fff,
-    inset -2px -2px grey,
-    inset 2px 2px #dfdfdf;
+  font-family: inherit;
+  box-shadow: var(--windows-button-box-shadow);
 `
 
 export const OpenApps = styled.div`
@@ -49,11 +47,8 @@ export const OpenProgram = styled.div`
   gap: 4px;
   color: var(--black);
   cursor: pointer;
-  box-shadow:
-    inset -1px -1px #0a0a0a,
-    inset 1px 1px #fff,
-    inset -2px -2px grey,
-    inset 2px 2px #dfdfdf;
+  box-shadow: var(--windows-button-box-shadow);
+
   img {
     width: 1.25rem;
     height: 1.25rem;

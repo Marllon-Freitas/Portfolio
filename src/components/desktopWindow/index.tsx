@@ -9,6 +9,7 @@ import {
   ResizeHandle
 } from './styled'
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../utils'
+import windowCloseIcon from '../../assets/icons/close_window_button.svg'
 
 interface GenericWindowProps {
   title: string
@@ -122,9 +123,11 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
           <span>{title}</span>
         </TitleBarInfo>
         <ControlButtons>
-          <Button onClick={onMinimize}>-</Button>
+          <Button onClick={onMinimize}>_</Button>
           <Button onClick={handleMaximize}>{isMaximized ? '🗗' : '🗖'}</Button>
-          <Button onClick={onClose}>X</Button>
+          <Button onClick={onClose}>
+            <img src={windowCloseIcon} alt="close" />
+          </Button>
         </ControlButtons>
       </TitleBar>
       <ContentArea>{children}</ContentArea>

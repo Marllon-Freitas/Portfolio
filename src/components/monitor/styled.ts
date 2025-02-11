@@ -24,19 +24,6 @@ export const flicker = keyframes`
   100% { opacity: 0.54387; }
 `
 
-export const textShadowAnimation = keyframes`
-  0% {
-    text-shadow: 0.44px 0 1px rgba(0,30,255,0.5),
-                 -0.44px 0 1px rgba(255,0,80,0.3),
-                 0 0 3px;
-  }
-  100% {
-    text-shadow: 2.62px 0 1px rgba(0,30,255,0.5),
-                 -2.62px 0 1px rgba(255,0,80,0.3),
-                 0 0 3px;
-  }
-`
-
 export const scanlineAnimation = keyframes`
   0% { bottom: 100%; }
   80% { bottom: 100%; }
@@ -70,8 +57,6 @@ export const Content = styled.div`
   background-color: var(--screen-background-color);
   image-rendering: pixelated;
   filter: contrast(1.5) brightness(0.9);
-
-  animation: ${textShadowAnimation} 1s infinite alternate;
 `
 
 export const Overlay = styled.div`
