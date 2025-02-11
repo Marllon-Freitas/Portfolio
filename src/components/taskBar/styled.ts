@@ -12,6 +12,7 @@ export const TaskbarContainer = styled.div`
   justify-content: space-between;
   padding: 0 4px;
   border-top: 1px solid #333;
+  z-index: 100;
 `
 
 export const WindowsButton = styled.button`

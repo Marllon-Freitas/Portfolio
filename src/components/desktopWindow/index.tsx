@@ -11,6 +11,9 @@ import {
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../utils'
 import windowCloseIcon from '../../assets/icons/close_window_button.svg'
 
+const MIN_WIDTH = 200
+const MIN_HEIGHT = 150
+
 interface GenericWindowProps {
   title: string
   children: React.ReactNode
@@ -61,10 +64,14 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
           y: e.clientY - startPos.current.y
         })
       } else if (isResizing) {
-        const newWidth =
+        const newWidth = Math.max(
+          MIN_WIDTH,
           startSize.current.width + (e.clientX - startPos.current.x)
-        const newHeight =
+        )
+        const newHeight = Math.max(
+          MIN_HEIGHT,
           startSize.current.height + (e.clientY - startPos.current.y)
+        )
         setSize({ width: newWidth, height: newHeight })
       }
     },
@@ -126,7 +133,8 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
           <Button onClick={onMinimize}>_</Button>
           <Button onClick={handleMaximize}>{isMaximized ? '🗗' : '🗖'}</Button>
           <Button onClick={onClose}>
-            <img src={windowCloseIcon} alt="close" />
+            {' '}
+            <img src={windowCloseIcon} alt="Close" />{' '}
           </Button>
         </ControlButtons>
       </TitleBar>
