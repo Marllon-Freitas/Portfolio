@@ -19,11 +19,11 @@ export const WallpaperItem = styled.div<WallpaperItemProps>`
   width: 5rem;
   cursor: pointer;
   user-select: none;
-  border: ${(props) =>
+  border: ${(props: WallpaperItemProps) =>
     props.selected
       ? '1px solid var(--selection-border)'
       : '1px solid transparent'};
-  background-color: ${(props) =>
+  background-color: ${(props: WallpaperItemProps) =>
     props.selected ? 'var(--selection-background)' : 'transparent'};
   padding: 0.3rem 0.8rem;
 
@@ -42,7 +42,7 @@ export const WallpaperImage = styled.div<WallpaperImageProps>`
   height: 2.5rem;
   display: block;
   margin: 0 auto;
-  background-image: url(${(props) => props.image});
+  background-image: url(${(props: WallpaperImageProps) => props.image});
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;

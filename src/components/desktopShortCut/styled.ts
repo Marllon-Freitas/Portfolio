@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface ShortcutContainerProps {
-  selected: boolean
+  selected?: boolean
 }
 
 export const ShortcutContainer = styled.div<ShortcutContainerProps>`
@@ -12,8 +12,11 @@ export const ShortcutContainer = styled.div<ShortcutContainerProps>`
   width: 5rem;
   cursor: grab;
   user-select: none;
-  border: ${(props) => (props.selected ? '1px solid var(--selection-border)' : '1px solid transparent')};
-  background-color: ${(props) =>
+  border: ${(props: ShortcutContainerProps) =>
+    props.selected
+      ? '1px solid var(--selection-border)'
+      : '1px solid transparent'};
+  background-color: ${(props: ShortcutContainerProps) =>
     props.selected ? 'var(--selection-background)' : 'transparent'};
   padding: 0.3rem 0.8rem;
 
