@@ -1,0 +1,5 @@
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ]; then
+  echo "📦 Realizando deploy para GitHub Pages..."
+  pnpm deploy
+fi

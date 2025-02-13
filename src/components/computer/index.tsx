@@ -1,17 +1,14 @@
-
-import { ReactNode } from 'react';
-import { ComputerCase, ComputerContainer } from './styled';
+import { ReactNode } from 'react'
+import { ComputerCase, ComputerContainer } from './styled'
 
 interface ComputerProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const Computer = ({ children }: ComputerProps) => {
   return (
     <ComputerContainer>
-      <ComputerCase>
-        {children}
-      </ComputerCase>
+      <ComputerCase>{children}</ComputerCase>
     </ComputerContainer>
-  );
-};
+  )
+}

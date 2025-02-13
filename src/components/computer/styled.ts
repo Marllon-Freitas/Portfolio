@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const ComputerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-`;
+`
 
 export const ComputerCase = styled.div`
   width: calc(var(--screen-width) + 5rem);
@@ -15,4 +15,4 @@ export const ComputerCase = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
