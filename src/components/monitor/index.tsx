@@ -13,6 +13,7 @@ import GenericWindow from '../desktopWindow'
 import Taskbar from '../taskBar'
 import WallpaperOptions from '../desktopShortCut/components/wallpaperOptions'
 import { useWallpaper } from '../../hooks/useWallpaper'
+import Terminal from '../desktopShortCut/components/terminal'
 
 interface Shortcut {
   id: number
@@ -72,15 +73,7 @@ const SHORTCUTS: Shortcut[] = [
     position: { x: 20, y: 180 },
     icon: cmdIcon,
     label: 'cmd',
-    content: (
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam
-        tenetur cum molestiae quam voluptatem est saepe, nobis dolores, facilis
-        laborum ratione id veritatis exercitationem praesentium! Odio magnam
-        laudantium voluptas?
-        <br />
-      </div>
-    )
+    content: <Terminal />
   },
   {
     id: 4,
