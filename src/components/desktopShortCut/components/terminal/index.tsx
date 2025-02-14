@@ -5,6 +5,10 @@ import {
   TerminalContainer,
   TerminalLine
 } from './styled'
+import {
+  AVAILABLE_COMMANDS,
+  TERMINAL_COLORS
+} from '../../../../utils/constants'
 
 interface FileSystem {
   [key: string]: {
@@ -23,6 +27,8 @@ const Terminal: React.FC = () => {
   const [historyIndex, setHistoryIndex] = useState<number | null>(null)
   const [commandHistory, setCommandHistory] = useState<string[]>([])
   const [showAutoComplete, setShowAutoComplete] = useState(false)
+  const [textColor, setTextColor] = useState('white')
+  const [backgroundColor, setBackgroundColor] = useState('black')
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -62,8 +68,6 @@ const Terminal: React.FC = () => {
     }
   }
 
-  const availableCommands = ['dir', 'cd', 'cls', 'help', 'type', 'echo', 'exit']
-
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight
@@ -90,7 +94,7 @@ const Terminal: React.FC = () => {
 
     if (!input.includes(' ')) {
       options.push(
-        ...availableCommands.filter((cmd) =>
+        ...AVAILABLE_COMMANDS.filter((cmd) =>
           cmd.startsWith(input.toLowerCase())
         )
       )
@@ -171,6 +175,7 @@ const Terminal: React.FC = () => {
             type    - Display content of a text file
             echo    - Display a message
             exit    - Exit the terminal
+            color   - Change text and background color
 
           Tips:
             - Use Tab for command/path autocompletion
@@ -193,6 +198,28 @@ const Terminal: React.FC = () => {
         break
       case 'echo':
         output = args.join(' ')
+        break
+      case 'color':
+        if (args.length === 0) {
+          output = 'The syntax of the command is incorrect.'
+        } else {
+          const colorCode = args[0].toUpperCase() as string
+          const firstChar = colorCode[0] as keyof typeof TERMINAL_COLORS
+          const secondChar = colorCode[1] as keyof typeof TERMINAL_COLORS
+
+          if (
+            colorCode.length === 2 &&
+            TERMINAL_COLORS[firstChar] &&
+            TERMINAL_COLORS[secondChar]
+          ) {
+            setBackgroundColor(TERMINAL_COLORS[firstChar].value)
+            setTextColor(TERMINAL_COLORS[secondChar].value)
+            output = `Text color set to ${TERMINAL_COLORS[secondChar].name}, background color set to ${TERMINAL_COLORS[firstChar].name}`
+          } else {
+            output =
+              'Invalid color code. Use a valid color code (e.g., 0A, 1B, etc.).'
+          }
+        }
         break
       case 'exit':
         output = 'Goodbye! Closing terminal...'
@@ -308,6 +335,7 @@ const Terminal: React.FC = () => {
     <TerminalContainer
       ref={terminalRef}
       onClick={() => inputRef.current?.focus()}
+      style={{ color: textColor, backgroundColor: backgroundColor }}
     >
       {inputHistory.map((line, i) => (
         <TerminalLine key={i}>{line}</TerminalLine>

@@ -8,7 +8,7 @@ import {
   TitleBarInfo,
   ResizeHandle
 } from './styled'
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../utils'
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../utils/constants'
 import windowCloseIcon from '../../assets/icons/close_window_button.svg'
 
 const MIN_WIDTH = 200

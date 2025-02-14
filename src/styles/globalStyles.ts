@@ -1,5 +1,5 @@
 import { createGlobalStyle, keyframes } from 'styled-components'
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../utils'
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../utils/constants'
 
 export const textShadowAnimation = keyframes`
   0% {
