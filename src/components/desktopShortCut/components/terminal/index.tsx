@@ -7,16 +7,10 @@ import {
 } from './styled'
 import {
   AVAILABLE_COMMANDS,
+  fileSystem,
   TERMINAL_COLORS
 } from '../../../../utils/constants'
-
-interface FileSystem {
-  [key: string]: {
-    type: 'file' | 'directory'
-    content?: string
-    children?: FileSystem
-  }
-}
+import { FileSystem } from '../../../../utils/types'
 
 const Terminal: React.FC = () => {
   const [currentPath, setCurrentPath] = useState('C:\\marllon\\portfolio')
@@ -31,42 +25,6 @@ const Terminal: React.FC = () => {
   const [backgroundColor, setBackgroundColor] = useState('black')
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const fileSystem: FileSystem = {
-    'C:': {
-      type: 'directory',
-      children: {
-        marllon: {
-          type: 'directory',
-          children: {
-            portfolio: {
-              type: 'directory',
-              children: {
-                'README.txt': {
-                  type: 'file',
-                  content: 'Welcome to my portfolio!'
-                },
-                projects: {
-                  type: 'directory',
-                  children: {}
-                },
-                about: {
-                  type: 'directory',
-                  children: {
-                    'contact.txt': {
-                      type: 'file',
-                      content:
-                        'Email: marllonfreitas64@gmail.com\nGitHub: marllon-freitas'
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 
   useEffect(() => {
     if (terminalRef.current) {

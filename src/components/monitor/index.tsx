@@ -14,14 +14,8 @@ import Taskbar from '../taskBar'
 import WallpaperOptions from '../desktopShortCut/components/wallpaperOptions'
 import { useWallpaper } from '../../hooks/useWallpaper'
 import Terminal from '../desktopShortCut/components/terminal'
-
-interface Shortcut {
-  id: number
-  position: { x: number; y: number }
-  icon: string
-  label: string
-  content: React.ReactNode
-}
+import Games from '../desktopShortCut/components/games'
+import { Shortcut } from '../../utils/types'
 
 interface Window {
   id: number
@@ -35,51 +29,22 @@ const SHORTCUTS: Shortcut[] = [
   {
     id: 1,
     position: { x: 20, y: 20 },
-    icon: folderIcon,
-    label: 'notes.txt',
-    content: (
-      <div>
-        <img src={folderIcon} alt="test" />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam
-        tenetur cum molestiae quam voluptatem est saepe, nobis dolores, facilis
-        laborum ratione id veritatis exercitationem praesentium! Odio magnam
-        laudantium voluptas?
-        <br />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam
-        tenetur cum molestiae quam voluptatem est saepe, nobis dolores, facilis
-        laborum ratione id veritatis exercitationem praesentium! Odio magnam
-        laudantium voluptas?
-        <br />
-      </div>
-    )
-  },
-  {
-    id: 2,
-    position: { x: 20, y: 100 },
-    icon: folderIcon,
-    label: 'docs.txt',
-    content: (
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam
-        tenetur cum molestiae quam voluptatem est saepe, nobis dolores, facilis
-        laborum ratione id veritatis exercitationem praesentium! Odio magnam
-        laudantium voluptas?
-        <br />
-      </div>
-    )
-  },
-  {
-    id: 3,
-    position: { x: 20, y: 180 },
     icon: cmdIcon,
     label: 'cmd',
     content: <Terminal />
   },
   {
-    id: 4,
-    position: { x: 20, y: 260 },
+    id: 2,
+    position: { x: 20, y: 100 },
     icon: folderIcon,
     label: 'wallpapers',
+    content: null
+  },
+  {
+    id: 3,
+    position: { x: 20, y: 180 },
+    icon: folderIcon,
+    label: 'games',
     content: null
   }
 ]
@@ -107,6 +72,33 @@ export const Monitor = () => {
     new Set()
   )
 
+  const handleDoubleClick = (shortcut: Shortcut) => {
+    const existingWindow = openWindows.find(
+      (window) => window.id === shortcut.id
+    )
+
+    if (existingWindow) {
+      handleWindowClick(existingWindow.id)
+    } else {
+      const newPosition = {
+        x: lastWindowPosition.x + 20,
+        y: lastWindowPosition.y + 20
+      }
+
+      const newWindow = {
+        id: shortcut.id,
+        label: shortcut.label,
+        content: shortcut.content,
+        position: newPosition,
+        icon: shortcut.icon
+      }
+
+      setOpenWindows((prevWindows) => [...prevWindows, newWindow])
+      setWindowOrder((prevOrder) => [...prevOrder, newWindow.id])
+      setLastWindowPosition(newPosition)
+    }
+  }
+
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(() =>
     SHORTCUTS.map((shortcut) =>
       shortcut.label === 'wallpapers'
@@ -120,7 +112,12 @@ export const Monitor = () => {
               />
             )
           }
-        : shortcut
+        : shortcut.label === 'games'
+          ? {
+              ...shortcut,
+              content: <Games handleDoubleClick={handleDoubleClick} />
+            }
+          : shortcut
     )
   )
 
@@ -238,28 +235,6 @@ export const Monitor = () => {
     setSelectionBox(null)
     setIsDragging(false)
     initialDragPositions.current = {}
-  }
-
-  const handleDoubleClick = (shortcut: Shortcut) => {
-    const existingWindow = openWindows.find(
-      (window) => window.id === shortcut.id
-    )
-    if (existingWindow) {
-      handleWindowClick(existingWindow.id)
-    } else {
-      const newPosition = {
-        x: lastWindowPosition.x + 20,
-        y: lastWindowPosition.y + 20
-      }
-      const newWindow = {
-        ...shortcut,
-        position: newPosition,
-        icon: shortcut.icon
-      }
-      setOpenWindows([...openWindows, newWindow])
-      setWindowOrder([...windowOrder, newWindow.id])
-      setLastWindowPosition(newPosition)
-    }
   }
 
   const handleWindowClick = (id: number) => {

@@ -1,7 +1,43 @@
-import { TerminalColors } from './types'
+import { FileSystem, TerminalColors } from './types'
 
-export const WINDOW_WIDTH: number = 800
-export const WINDOW_HEIGHT: number = 600
+export const WINDOW_WIDTH: number = 1000
+export const WINDOW_HEIGHT: number = 740
+
+export const fileSystem: FileSystem = {
+  'C:': {
+    type: 'directory',
+    children: {
+      marllon: {
+        type: 'directory',
+        children: {
+          portfolio: {
+            type: 'directory',
+            children: {
+              'README.txt': {
+                type: 'file',
+                content: 'Welcome to my portfolio!'
+              },
+              projects: {
+                type: 'directory',
+                children: {}
+              },
+              about: {
+                type: 'directory',
+                children: {
+                  'contact.txt': {
+                    type: 'file',
+                    content:
+                      'Email: marllonfreitas64@gmail.com\nGitHub: marllon-freitas'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 export const TERMINAL_COLORS: TerminalColors = {
   '0': { name: 'black', value: '#000000' },

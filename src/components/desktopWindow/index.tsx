@@ -124,7 +124,7 @@ const GenericWindow: React.FC<GenericWindowProps> = ({
       }}
       onMouseDown={onClick}
     >
-      <TitleBar onMouseDown={handleMouseDown}>
+      <TitleBar onMouseDown={handleMouseDown} onDoubleClick={handleMaximize}>
         <TitleBarInfo>
           <img src={icon} alt="icon" />
           <span>{title}</span>
