@@ -2,10 +2,12 @@ import styled from 'styled-components'
 
 interface ShortcutContainerProps {
   selected?: boolean
+  isInFolder?: boolean
 }
 
 export const ShortcutContainer = styled.div<ShortcutContainerProps>`
-  position: absolute;
+  position: ${(props: ShortcutContainerProps) =>
+    props.isInFolder ? 'relative' : 'absolute'};
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -31,21 +31,24 @@ const SHORTCUTS: Shortcut[] = [
     position: { x: 20, y: 20 },
     icon: cmdIcon,
     label: 'cmd',
-    content: <Terminal />
+    content: <Terminal />,
+    isInFolder: false
   },
   {
     id: 2,
     position: { x: 20, y: 100 },
     icon: folderIcon,
     label: 'wallpapers',
-    content: null
+    content: null,
+    isInFolder: false
   },
   {
     id: 3,
     position: { x: 20, y: 180 },
     icon: folderIcon,
     label: 'games',
-    content: null
+    content: null,
+    isInFolder: false
   }
 ]
 
@@ -289,6 +292,7 @@ export const Monitor = () => {
               handleShortcutDrag(shortcut.id, newPosition)
             }
             onDoubleClick={() => handleDoubleClick(shortcut)}
+            isInFolder={shortcut.isInFolder}
           />
         ))}
         {isSelecting && selectionBox && (

@@ -19,4 +19,5 @@ export interface Shortcut {
   icon: string
   label: string
   content: React.ReactNode
+  isInFolder: boolean
 }

@@ -10,6 +10,7 @@ interface DesktopShortcutProps {
   onClick: (e: React.MouseEvent) => void
   onDrag: (position: { x: number; y: number }) => void
   onStartDrag?: () => void
+  isInFolder: boolean
 }
 
 const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
@@ -20,7 +21,8 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
   selected,
   onClick,
   onDrag,
-  onStartDrag
+  onStartDrag,
+  isInFolder = false
 }) => {
   const dragging = useRef(false)
   const offset = useRef({ x: 0, y: 0 })
@@ -72,10 +74,11 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
   return (
     <ShortcutContainer
       ref={containerRef}
-      style={{ left: position.x, top: position.y }}
+      style={isInFolder ? {} : { left: position.x, top: position.y }}
       onMouseDown={handleMouseDown}
       onDoubleClick={onDoubleClick}
       selected={selected}
+      isInFolder={isInFolder}
     >
       <Icon src={icon} alt={label} draggable="false" />
       <Label>{label}</Label>
