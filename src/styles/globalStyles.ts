@@ -124,4 +124,12 @@ export const GlobalStyle = createGlobalStyle`
     -moz-animation: ${textShadowAnimation} 1s infinite alternate;
     -o-animation: ${textShadowAnimation} 1s infinite alternate;
   }
+
+  a {
+    color: #0066cc;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `

@@ -11,8 +11,8 @@ import {
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../utils/constants'
 import windowCloseIcon from '../../assets/icons/close_window_button.svg'
 
-const MIN_WIDTH = 200
-const MIN_HEIGHT = 150
+const MIN_WIDTH = 250
+const MIN_HEIGHT = 200
 
 interface GenericWindowProps {
   title: string

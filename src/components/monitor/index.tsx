@@ -76,30 +76,37 @@ export const Monitor = () => {
   )
 
   const handleDoubleClick = (shortcut: Shortcut) => {
-    const existingWindow = openWindows.find(
-      (window) => window.id === shortcut.id
-    )
-
-    if (existingWindow) {
-      handleWindowClick(existingWindow.id)
-    } else {
-      const newPosition = {
-        x: lastWindowPosition.x + 20,
-        y: lastWindowPosition.y + 20
-      }
-
-      const newWindow = {
-        id: shortcut.id,
-        label: shortcut.label,
-        content: shortcut.content,
-        position: newPosition,
-        icon: shortcut.icon
-      }
-
-      setOpenWindows((prevWindows) => [...prevWindows, newWindow])
-      setWindowOrder((prevOrder) => [...prevOrder, newWindow.id])
-      setLastWindowPosition(newPosition)
+    if (openWindows.some((window) => window.id === shortcut.id)) {
+      const newOrder = windowOrder.filter((id) => id !== shortcut.id)
+      setWindowOrder([...newOrder, shortcut.id])
+      return
     }
+
+    const newPosition = {
+      x: lastWindowPosition.x + 20,
+      y: lastWindowPosition.y + 20
+    }
+
+    const newWindow = {
+      id: shortcut.id,
+      label: shortcut.label,
+      content: shortcut.content,
+      position: newPosition,
+      icon: shortcut.icon
+    }
+
+    setOpenWindows((prevWindows) => {
+      if (prevWindows.some((window) => window.id === shortcut.id)) {
+        setWindowOrder((prevOrder) => {
+          const newOrder = prevOrder.filter((id) => id !== shortcut.id)
+          return [...newOrder, shortcut.id]
+        })
+        return prevWindows
+      }
+      return [...prevWindows, newWindow]
+    })
+    setWindowOrder((prevOrder) => [...prevOrder, shortcut.id])
+    setLastWindowPosition(newPosition)
   }
 
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(() =>
