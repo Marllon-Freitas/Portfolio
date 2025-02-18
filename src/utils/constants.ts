@@ -1,7 +1,7 @@
 import { FileSystem, TerminalColors } from './types'
 
-export const WINDOW_WIDTH: number = 1000
-export const WINDOW_HEIGHT: number = 740
+export const WINDOW_WIDTH: number = 800
+export const WINDOW_HEIGHT: number = 600
 
 export const fileSystem: FileSystem = {
   'C:': {

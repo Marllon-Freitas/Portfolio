@@ -16,6 +16,7 @@ import { useWallpaper } from '../../hooks/useWallpaper'
 import Terminal from '../desktopShortCut/components/terminal'
 import Games from '../desktopShortCut/components/games'
 import { Shortcut } from '../../utils/types'
+import WebProjects from '../desktopShortCut/components/webProjectcs'
 
 interface Window {
   id: number
@@ -47,6 +48,14 @@ const SHORTCUTS: Shortcut[] = [
     position: { x: 20, y: 180 },
     icon: folderIcon,
     label: 'games',
+    content: null,
+    isInFolder: false
+  },
+  {
+    id: 4,
+    position: { x: 20, y: 260 },
+    icon: folderIcon,
+    label: 'web projects',
     content: null,
     isInFolder: false
   }
@@ -127,7 +136,12 @@ export const Monitor = () => {
               ...shortcut,
               content: <Games handleDoubleClick={handleDoubleClick} />
             }
-          : shortcut
+          : shortcut.label === 'web projects'
+            ? {
+                ...shortcut,
+                content: <WebProjects handleDoubleClick={handleDoubleClick} />
+              }
+            : shortcut
     )
   )
 
